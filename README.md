@@ -23,10 +23,11 @@ const fetchApi = function ({ count }) {
 nx.loopExecute({
   callback: fetchApi,
   done: function (res) {
+    console.log('res.data:', res.data);
     return res.count === 3;
   }
 }).then(res=>{
-  console.log('DONE!', res);
+  console.log('loop DONE!', res);
 });
 ```
 
