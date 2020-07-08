@@ -15,6 +15,7 @@ describe('api.basic test', () => {
     nx.loopExecute({
       callback: fetchApi,
       done: function (res) {
+        console.log('res:', res);
         return res.count === 3;
       }
     }).then(res=>{

@@ -16,8 +16,8 @@
     var looper = function (onResolved, onRejected) {
       count++
       setTimeout(function () {
-        options.callback({ count: count }).then(function (res) {
-          var countRes = nx.mix({ count: count }, res);
+        options.callback({ count: count }).then(function (data) {
+          var countRes = { count: count, data: data };
           if (!options.done(countRes)) {
             looper(onResolved, onRejected);
           } else {
