@@ -18,7 +18,7 @@ describe('api.basic test', () => {
         return res.count === 3;
       }
     }).then(res=>{
-      console.log('DONE!', res);
+      console.log('DONE:', res);
       done();
     });
   });
