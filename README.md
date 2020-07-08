@@ -15,10 +15,9 @@ npm install -S @feizheng/next-loop-execute
 ```js
 import '@feizheng/next-loop-execute';
 
-var fetchApi = function ({ count }) {
+const fetchApi = function ({ count }) {
   return fetch('https://api.github.com/users/afeiship').then(res=>res.json());
 }
-
 
 // loop 3 times:
 nx.loopExecute({
