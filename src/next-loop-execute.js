@@ -23,9 +23,7 @@
           } else {
             onResolved(countRes);
           }
-        }).catch(function (err) {
-          onRejected(err);
-        });
+        }).catch(onRejected);
       }, options.interval);
     };
 
