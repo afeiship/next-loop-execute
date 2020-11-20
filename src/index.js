@@ -1,15 +1,6 @@
-/*!
- * name: @feizheng/next-loop-execute
- * description: Loop execute for next.
- * homepage: https://github.com/afeiship/next-loop-execute
- * version: 1.0.4
- * date: 2020-07-08T12:10:40.968Z
- * license: MIT
- */
-
 (function () {
   var global = global || this || window || Function('return this')();
-  var nx = global.nx || require('@feizheng/next-js-core2');
+  var nx = global.nx || require('@jswork/next');
   var DEFAULT_OPTIONS = {
     interval: 200,
     done: function (response) {
@@ -23,16 +14,19 @@
     if (!options.callback) nx.error('options.callback required!');
 
     var looper = function (onResolved, onRejected) {
-      count++
+      count++;
       setTimeout(function () {
-        options.callback({ count: count }).then(function (data) {
-          var countRes = { count: count, data: data };
-          if (!options.done(countRes)) {
-            looper(onResolved, onRejected);
-          } else {
-            onResolved(countRes);
-          }
-        }).catch(onRejected);
+        options
+          .callback({ count: count })
+          .then(function (data) {
+            var countRes = { count: count, data: data };
+            if (!options.done(countRes)) {
+              looper(onResolved, onRejected);
+            } else {
+              onResolved(countRes);
+            }
+          })
+          .catch(onRejected);
       }, options.interval);
     };
 

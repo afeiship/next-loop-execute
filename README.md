@@ -8,12 +8,12 @@
 
 ## installation
 ```bash
-npm install -S @feizheng/next-loop-execute
+npm install -S @jswork/next-loop-execute
 ```
 
 ## usage
 ```js
-import '@feizheng/next-loop-execute';
+import '@jswork/next-loop-execute';
 
 const fetchApi = function ({ count }) {
   return fetch('https://api.github.com/users/afeiship').then(res=>res.json());
@@ -34,14 +34,14 @@ nx.loopExecute({
 ## license
 Code released under [the MIT license](https://github.com/afeiship/next-loop-execute/blob/master/LICENSE.txt).
 
-[version-image]: https://img.shields.io/npm/v/@feizheng/next-loop-execute
-[version-url]: https://npmjs.org/package/@feizheng/next-loop-execute
+[version-image]: https://img.shields.io/npm/v/@jswork/next-loop-execute
+[version-url]: https://npmjs.org/package/@jswork/next-loop-execute
 
-[license-image]: https://img.shields.io/npm/l/@feizheng/next-loop-execute
+[license-image]: https://img.shields.io/npm/l/@jswork/next-loop-execute
 [license-url]: https://github.com/afeiship/next-loop-execute/blob/master/LICENSE.txt
 
-[size-image]: https://img.shields.io/bundlephobia/minzip/@feizheng/next-loop-execute
+[size-image]: https://img.shields.io/bundlephobia/minzip/@jswork/next-loop-execute
 [size-url]: https://github.com/afeiship/next-loop-execute/blob/master/dist/next-loop-execute.min.js
 
-[download-image]: https://img.shields.io/npm/dm/@feizheng/next-loop-execute
-[download-url]: https://www.npmjs.com/package/@feizheng/next-loop-execute
+[download-image]: https://img.shields.io/npm/dm/@jswork/next-loop-execute
+[download-url]: https://www.npmjs.com/package/@jswork/next-loop-execute
