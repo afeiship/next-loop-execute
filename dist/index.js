@@ -3,7 +3,7 @@
  * description: Loop execute for next.
  * homepage: https://github.com/afeiship/next-loop-execute
  * version: 1.0.0
- * date: 2020-11-20 18:44:39
+ * date: 2020-11-20 18:45:45
  * license: MIT
  */
 
