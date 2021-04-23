@@ -21,14 +21,18 @@ const fetchApi = function ({ count }) {
 
 // loop 3 times:
 nx.loopExecute({
-  callback: fetchApi,
-  done: function (res) {
-    console.log('res.data:', res.data);
+  interval: 200,
+  timeout: 10 * 1000,
+  callback: (data) => {
+    console.log(data);
+    return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
+  },
+  done: (res) => {
     return res.count === 3;
   }
-}).then(res=>{
-  console.log('loop DONE!', res);
-});
+}).then((res) => {
+  console.log('DONE:', res);
+})
 ```
 
 ## license
