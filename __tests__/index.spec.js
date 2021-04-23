@@ -6,20 +6,24 @@
 
   describe('api.basic test', () => {
     test('nx.loopExecute', function (done) {
-      var fetchApi = function ({ count }) {
-        console.log('count:', count);
-        return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
-      };
-
       nx.loopExecute({
-        callback: fetchApi,
-        done: function (res) {
-          return res.count === 3;
+        timeout: 2000,
+        callback: (data) => {
+          console.log(data);
+          return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
+        },
+        done: (res) => {
+          return res.count === 20;
         }
-      }).then((res) => {
-        console.log('DONE:', res);
-        done();
-      });
+      })
+        .then((res) => {
+          console.log('DONE:', res);
+          done();
+        })
+        .catch((err) => {
+          console.log('err', err);
+          done();
+        });
     });
   });
 })();
