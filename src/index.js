@@ -1,7 +1,6 @@
 (function () {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@jswork/next');
-  var TIMEOUT_ERR = new Error('timeout: loop-execute');
   var DEFAULT_OPTIONS = {
     interval: 200,
     timeout: 30 * 1000,
@@ -34,7 +33,7 @@
 
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
-        reject(TIMEOUT_ERR);
+        reject(new Error('timeout: loop-execute'));
       }, options.timeout);
       looper(resolve, reject);
     });
