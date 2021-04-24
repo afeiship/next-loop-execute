@@ -12,30 +12,30 @@
   nx.loopExecute = function (inOptions) {
     var options = nx.mix(null, DEFAULT_OPTIONS, inOptions);
     var count = 0;
+    var timer = null;
     if (!options.callback) nx.error('options.callback required!');
 
-    var looper = function (resolve, reject) {
-      count++;
+    if (options.timeout) {
       setTimeout(function () {
+        clearInterval(timer);
+        Promise.reject('Timeout: loop-execute');
+      }, options.timeout);
+    }
+
+    return new Promise(function (resolve, reject) {
+      timer = setInterval(function () {
+        count++;
         options
           .callback({ count: count })
           .then(function (data) {
-            var countRes = { count: count, data: data };
-            if (!options.done(countRes)) {
-              looper(resolve, reject);
-            } else {
-              resolve(countRes);
+            var result = { count: count, data: data };
+            if (options.done(result)) {
+              clearInterval(timer);
+              resolve(result);
             }
           })
           .catch(reject);
       }, options.interval);
-    };
-
-    return new Promise(function (resolve, reject) {
-      setTimeout(function () {
-        reject(new Error('timeout: loop-execute'));
-      }, options.timeout);
-      looper(resolve, reject);
     });
   };
 
