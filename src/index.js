@@ -37,9 +37,7 @@
       }, options.interval);
     };
 
-    return new Promise(function (resolve, reject) {
-      looper(resolve, reject);
-    });
+    return new Promise(looper);
   };
 
   if (typeof module !== 'undefined' && module.exports) {
