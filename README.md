@@ -28,7 +28,7 @@ nx.loopExecute({
     return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
   },
   done: (res) => {
-    return res.count === 3;
+    return res.data.status === 'FINISHED';
   }
 }).then((res) => {
   console.log('DONE:', res);
