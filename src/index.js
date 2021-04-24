@@ -12,29 +12,33 @@
   nx.loopExecute = function (inOptions) {
     var options = nx.mix(null, DEFAULT_OPTIONS, inOptions);
     var count = 0;
-    var timer = null;
+    var timeout = false;
 
-    return new Promise(function (resolve, reject) {
-      if (options.timeout) {
-        setTimeout(function () {
-          clearInterval(timer);
-          reject('Timeout: loop-execute');
-        }, options.timeout);
-      }
+    if (options.timeout) {
+      setTimeout(function () {
+        timeout = true;
+      }, options.timeout);
+    }
 
-      timer = setInterval(function () {
-        count++;
+    var looper = function (resolve, reject) {
+      count++;
+      setTimeout(function () {
         options
           .callback({ count: count })
           .then(function (data) {
-            var result = { count: count, data: data };
-            if (options.done(result)) {
-              clearInterval(timer);
+            var result = { count: count, timeout: timeout, data: data };
+            if (options.done(result) || timeout) {
               resolve(result);
+            } else {
+              looper(resolve, reject);
             }
           })
           .catch(reject);
       }, options.interval);
+    };
+
+    return new Promise(function (resolve, reject) {
+      looper(resolve, reject);
     });
   };
 

@@ -18,7 +18,8 @@
         }
       })
         .then((res) => {
-          expect(typeof res.data).toBe('object');
+          expect(res.timeout).toBe(false);
+          expect(res.data.login).toBe('afeiship');
         })
         .catch((err) => {
           console.log(err);
@@ -29,22 +30,24 @@
     });
   });
 
-  test('02-nx.loopExecute will caught err when timeout', () => {
-    var timeoutErr = () => {
-      nx.loopExecute({
-        interval: 1000,
-        timeout: 2 * 1000,
-        callback: (data) => {
-          console.log(data);
-          return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
-        },
-        done: (res) => {
-          return res.count === 10;
-        }
-      }).finally(() => {
-        expect(timeoutErr).toThrow();
+  test('02-nx.loopExecute will caught err when timeout', (done) => {
+    nx.loopExecute({
+      interval: 500,
+      timeout: 2 * 1000,
+      callback: (data) => {
+        console.log(data);
+        return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
+      },
+      done: (res) => {
+        return res.count === 10;
+      }
+    })
+      .then((res) => {
+        expect(res.timeout).toBe(true);
+        expect(res.data.login).toBe('afeiship');
+      })
+      .finally(() => {
         done();
       });
-    };
   });
 })();
