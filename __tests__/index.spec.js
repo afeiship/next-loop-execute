@@ -18,7 +18,7 @@
         }
       })
         .then((res) => {
-          expect(res.data.login).toBe('afeiship');
+          expect(typeof res.data).toBe('object');
         })
         .catch((err) => {
           console.log(err);

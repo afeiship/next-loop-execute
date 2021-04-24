@@ -13,16 +13,15 @@
     var options = nx.mix(null, DEFAULT_OPTIONS, inOptions);
     var count = 0;
     var timer = null;
-    if (!options.callback) nx.error('options.callback required!');
-
-    if (options.timeout) {
-      setTimeout(function () {
-        clearInterval(timer);
-        Promise.reject('Timeout: loop-execute');
-      }, options.timeout);
-    }
 
     return new Promise(function (resolve, reject) {
+      if (options.timeout) {
+        setTimeout(function () {
+          clearInterval(timer);
+          reject('Timeout: loop-execute');
+        }, options.timeout);
+      }
+
       timer = setInterval(function () {
         count++;
         options
