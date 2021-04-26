@@ -1,6 +1,7 @@
 (function () {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@jswork/next');
+  var TIMEOUT_MESSAGE = { type: 'timeout', message: 'Timeout from `next-loop-execute`' };
   var DEFAULT_OPTIONS = {
     interval: 200,
     timeout: 30 * 1000,
@@ -26,11 +27,15 @@
         options
           .callback({ count: count })
           .then(function (data) {
-            var result = { count: count, timeout: timeout, data: data };
-            if (options.done(result) || timeout) {
-              resolve(result);
+            var result = { count: count, data: data };
+            if (timeout) {
+              reject(TIMEOUT_MESSAGE);
             } else {
-              looper(resolve, reject);
+              if (options.done(result)) {
+                resolve(result);
+              } else {
+                looper(resolve, reject);
+              }
             }
           })
           .catch(reject);

@@ -18,7 +18,6 @@
         }
       })
         .then((res) => {
-          expect(res.timeout).toBe(false);
           expect(res.data.login).toBe('afeiship');
         })
         .catch((err) => {
@@ -30,7 +29,7 @@
     });
   });
 
-  test('02-nx.loopExecute will caught err when timeout', (done) => {
+  test.only('02-nx.loopExecute will caught err when timeout', (done) => {
     nx.loopExecute({
       interval: 500,
       timeout: 2 * 1000,
@@ -42,9 +41,8 @@
         return res.count === 10;
       }
     })
-      .then((res) => {
-        expect(res.timeout).toBe(true);
-        expect(res.data.login).toBe('afeiship');
+      .catch((err) => {
+        expect(err.type).toBe('timeout');
       })
       .finally(() => {
         done();
