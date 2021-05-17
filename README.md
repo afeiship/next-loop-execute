@@ -24,7 +24,7 @@ nx.loopExecute({
   interval: 200,
   timeout: 10 * 1000,
   interrupt: (res)=>{
-    return false;
+    return manualInterruptFlag;
   },
   callback: (data) => {
     console.log(data);
