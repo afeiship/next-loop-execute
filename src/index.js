@@ -2,9 +2,11 @@
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@jswork/next');
   var TIMEOUT_MESSAGE = { type: 'timeout', message: 'Timeout from `next-loop-execute`' };
+  var INTERRUPT_MESSAGE = { type: 'interrupt', message: 'Interrupt from `next-loop-execute`' };
   var DEFAULT_OPTIONS = {
     interval: 200,
     timeout: 30 * 1000,
+    interrupt: nx.stubFalse,
     done: function (response) {
       return response.ok;
     }
@@ -28,14 +30,12 @@
           .callback({ count: count })
           .then(function (data) {
             var result = { count: count, data: data };
-            if (timeout) {
-              reject(TIMEOUT_MESSAGE);
+            if (timeout) return reject(TIMEOUT_MESSAGE);
+            if (options.interrupt(result)) return reject(INTERRUPT_MESSAGE);
+            if (options.done(result)) {
+              resolve(result);
             } else {
-              if (options.done(result)) {
-                resolve(result);
-              } else {
-                looper(resolve, reject);
-              }
+              looper(resolve, reject);
             }
           })
           .catch(reject);

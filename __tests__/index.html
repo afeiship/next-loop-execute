@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/bulma/0.0.10/css/bulma.css">
+  <script src="https://unpkg.com/@jswork/next"></script>
+  <script src="../src/index.js"></script>
+  <style>
+    .text-center {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .card {
+      width: 80%;
+      padding: 20px;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="text-center">
+    <button class="button mr-2 is-primary" id="action1">Start loop</button>
+    <button class="button is-danger" id="action2">Stop loop</button>
+
+    <div class="card " id="res"></div>
+    <div class="card " id="err"></div>
+  </div>
+
+  <script>
+    var btnAction1 = document.getElementById('action1');
+    var btnAction2 = document.getElementById('action2');
+    var res = document.getElementById('res');
+    var errContainer = document.getElementById('err');
+    var interruptFlag = false;
+
+    btnAction2.addEventListener('click', () => {
+      interruptFlag = true;
+    })
+
+    btnAction1.addEventListener('click', () => {
+      interruptFlag = false;
+      nx.loopExecute({
+        interval: 2000,
+        timeout: 10 * 1000,
+        interrupt: () => {
+          return interruptFlag
+        },
+        callback: (data) => {
+          res.innerHTML = JSON.stringify(data, null, 2)
+          return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
+        },
+        done: (res) => {
+          return res.count === 100;
+        }
+      }).catch((err) => {
+        console.log(err);
+        errContainer.innerHTML = JSON.stringify(err, null, 2)
+      });
+    })
+
+  </script>
+</body>
+
+</html>

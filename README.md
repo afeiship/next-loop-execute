@@ -23,6 +23,9 @@ const fetchApi = function ({ count }) {
 nx.loopExecute({
   interval: 200,
   timeout: 10 * 1000,
+  interrupt: (res)=>{
+    return false;
+  },
   callback: (data) => {
     console.log(data);
     return fetch('https://api.github.com/users/afeiship').then((res) => res.json());
