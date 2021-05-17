@@ -48,7 +48,7 @@
         });
     });
 
-    test.only('03-if interrupt exist will cautht interrupt-err message', (done) => {
+    test('03-if interrupt exist will cautht interrupt-err message', (done) => {
       var interruptFlag = false;
 
       setTimeout(() => {

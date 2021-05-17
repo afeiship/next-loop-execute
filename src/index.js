@@ -32,11 +32,8 @@
             var result = { count: count, data: data };
             if (timeout) return reject(TIMEOUT_MESSAGE);
             if (options.interrupt(result)) return reject(INTERRUPT_MESSAGE);
-            if (options.done(result)) {
-              resolve(result);
-            } else {
-              looper(resolve, reject);
-            }
+            if (options.done(result)) return resolve(result);
+            looper(resolve, reject);
           })
           .catch(reject);
       }, options.interval);
