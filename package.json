@@ -1,6 +1,6 @@
 {
   "name": "@jswork/next-loop-execute",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Loop execute for next.",
   "homepage": "https://js.work",
   "files": [
@@ -53,5 +53,12 @@
     "src/**/*.{js,jsx}": [
       "npm run pretty"
     ]
-  }
+  },
+  "keywords": [
+    "next",
+    "loop",
+    "execute",
+    "action",
+    "fetch"
+  ]
 }
